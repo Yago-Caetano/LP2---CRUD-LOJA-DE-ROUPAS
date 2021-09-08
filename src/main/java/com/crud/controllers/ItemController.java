@@ -83,18 +83,10 @@ public class ItemController {
     {
         String err = "";
         ItemDAO item = new ItemDAO();
-        if(Id != null){
-            item.selectItem(Id)
-        } else{
-            err = "O item não existe ou não foi informado!";
-            throw new Exception(err);
-        }
+            item.selectItem(Id);
     }
 
     protected void ValidaDados(ItemModel Item){
-        if(Item.getCodigoItem() == null){
-            throw new IllegalArgumentException("O código do item é obrigatório");
-        }
         if(Item.getDataEntrada() == null || Item.getDataEntrada() > DateTimeAtProcessing.){
             throw new IllegalArgumentException("A data do item é obrigatória");
         }
