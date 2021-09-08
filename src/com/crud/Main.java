@@ -5,7 +5,6 @@ import Views.TelaCadastroView;
 import Views.TelaCallback;
 import Views.TelaPrincipalView;
 import com.crud.dao.ItemDAO;
-import com.crud.models.EstoqueModel;
 import com.crud.models.ItemModel;
 
 import java.util.ArrayList;
@@ -23,7 +22,7 @@ public class Main {
     public static final int TELA_DELETAR = 6;
 
 
-    private static EstoqueModel Estoque;
+
     private static List<PadraoView> Telas;
     private static int IndiceDeTelaSelecionado;
 
@@ -45,18 +44,14 @@ public class Main {
 
         @Override
         public boolean InsertItem(ItemModel Item) {
-            return Estoque.cadastrarItemModel(Item);
-        }
-
-        @Override
-        public EstoqueModel GetEstoque() {
-            return Estoque;
+            return false;
         }
 
         @Override
         public int SolicitarID() {
-            return Estoque.SolicitarID();
+            return 0;
         }
+
 
     };
 

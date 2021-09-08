@@ -1,6 +1,5 @@
 package Views;
 
-import com.crud.models.EstoqueModel;
 import com.crud.models.ItemModel;
 
 public interface TelaCallback {
