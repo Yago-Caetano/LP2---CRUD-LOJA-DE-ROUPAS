@@ -1,4 +1,4 @@
-package Views;
+package com.crud.views;
 
 public class TelaPrincipalView extends  PadraoView{
 

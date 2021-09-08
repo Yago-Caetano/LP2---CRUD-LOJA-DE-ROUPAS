@@ -1,10 +1,11 @@
 package com.crud;
 
 import com.crud.dao.ItemDAO;
-import com.crud.enums.EnumCor;
-import com.crud.enums.EnumTamanho;
-import com.crud.enums.EnumTipoItem;
 import com.crud.models.ItemModel;
+import com.crud.views.PadraoView;
+import com.crud.views.TelaCadastroView;
+import com.crud.views.TelaCallback;
+import com.crud.views.TelaPrincipalView;
 import com.google.gson.Gson;
 
 import java.io.FileWriter;
@@ -12,11 +13,98 @@ import java.io.IOException;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
 
+    public static final int TELA_INICIAL = 0;
+    public static final int TELA_CADASTRO_COMPROMISSO = 1;
+    public static final int TELA_EDICAO_COMPROMISSO = 2;
+    public static final int TELA_SELECIONAR_COMPROMISSO = 3;
+    public static final int TELA_ALARME = 4;
+    public static final int TELA_AGENDA = 5;
+    public static final int TELA_DELETAR = 6;
+
+
+
+    private static List<PadraoView> Telas;
+    private static int IndiceDeTelaSelecionado;
+
+    /*
+        Callback das telas
+     */
+    static TelaCallback cbTela = new TelaCallback() {
+        @Override
+        public void trocarTela(int idTela) {
+            for(int counter = 0; counter < Telas.size(); counter++)
+            {
+                if(Telas.get(counter).getId() == idTela)
+                {
+                    IndiceDeTelaSelecionado = counter;
+                    mostraTelaSelecionada();
+                }
+            }
+        }
+
+        @Override
+        public boolean InsertItem(ItemModel Item) {
+            return false;
+        }
+
+        @Override
+        public int SolicitarID() {
+            return 0;
+        }
+
+
+    };
+
+    private static void aguardaInput()
+    {
+        Scanner s = new Scanner(System.in);
+        String input = s.nextLine();
+        Telas.get(IndiceDeTelaSelecionado).manipulaInput(input);
+    }
+
     public static void main(String[] args)
+    {
+        ItemDAO dao = new ItemDAO();
+
+        gerenciarTelas();
+
+        while (true)
+        {
+            aguardaInput();
+        }
+    }
+
+
+    public static void gerenciarTelas()
+    {
+        IndiceDeTelaSelecionado = 0;
+        //Agenda= new AgendaModel();
+        Telas = new ArrayList<PadraoView>();
+
+        Telas.add(new TelaPrincipalView());
+        Telas.add(new TelaCadastroView());
+        // Telas.add(new TelaAgendaView());
+        //Telas.add(new TelaEdicaoView());
+        //Telas.add(new TelaDeletarView());
+
+        mostraTelaSelecionada();
+
+    }
+    private static void mostraTelaSelecionada()
+    {
+        Telas.get(IndiceDeTelaSelecionado).mostraTela(cbTela);
+
+    }
+
+
+
+
+    /*public static void main(String[] args)
     {
         ItemDAO dao = new ItemDAO();
         System.out.println("Rodou");
@@ -86,5 +174,5 @@ public class Main {
         Scanner sc = new Scanner(System.in);
         System.out.print("Digite um texto:");
         sc.next();
-    }
+    }*/
 }

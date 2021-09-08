@@ -1,4 +1,4 @@
-package Views;
+package com.crud.views;
 
 import com.crud.dao.ItemDAO;
 import com.crud.enums.EnumCor;

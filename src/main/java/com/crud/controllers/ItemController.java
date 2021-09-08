@@ -2,7 +2,6 @@ package com.crud.controllers;
 
 import com.crud.dao.ItemDAO;
 import com.crud.models.ItemModel;
-import com.sun.xml.internal.ws.api.message.Message;
 
 import javax.print.attribute.standard.DateTimeAtProcessing;
 import java.io.IOException;
@@ -83,21 +82,22 @@ public class ItemController {
     {
         String err = "";
         ItemDAO item = new ItemDAO();
-        if(Id != null){
+        /*if(Id != null){
             item.selectItem(Id)
         } else{
             err = "O item não existe ou não foi informado!";
             throw new Exception(err);
-        }
+        }*/
+        return null;
     }
 
     protected void ValidaDados(ItemModel Item){
-        if(Item.getCodigoItem() == null){
+        /*if(Item.getCodigoItem() == null){
             throw new IllegalArgumentException("O código do item é obrigatório");
-        }
-        if(Item.getDataEntrada() == null || Item.getDataEntrada() > DateTimeAtProcessing.){
+        }*/
+        /*if(Item.getDataEntrada() == null || Item.getDataEntrada() > DateTimeAtProcessing.){
             throw new IllegalArgumentException("A data do item é obrigatória");
-        }
+        }*/
         if(Item.getLocalCompra() == null){
             throw new IllegalArgumentException("O local de compra deve ser fornecido!");
         }
@@ -116,8 +116,8 @@ public class ItemController {
         if(Item.getCor() == null){
             throw new IllegalArgumentException("A cor do item é obrigatória");
         }
-        if(Item.getValorPago() == null){
+        /*if(Item.getValorPago() == null){
             throw new IllegalArgumentException("O valor pago deve ser forecido");
-        }
+        }*/
     }
 }

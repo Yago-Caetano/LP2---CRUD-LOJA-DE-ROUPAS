@@ -1,6 +1,8 @@
-package Views;
+package com.crud.views;
 
-public class TelaEdicaoView extends PadraoView{
+import java.util.Calendar;
+
+public class TelaEdicaoView extends PadraoView {
 
     private byte menu;
     private int Del_ID;
@@ -14,33 +16,32 @@ public class TelaEdicaoView extends PadraoView{
     final static byte EDITAR_CARACTERISTICAS = 6;
     final static byte EDITAR_TAMANHO = 7;
     final static byte EDITAR_COR = 8;
-    final static byte EDITAR_VALOR_PAGO_MARGEM= 9;
-    final static byte EDITAR_PRECO_SUGERIDO= 10;
+    final static byte EDITAR_VALOR_PAGO_MARGEM = 9;
+    final static byte EDITAR_PRECO_SUGERIDO = 10;
     final static byte CONFIRMA_EDICAO = 11;
 
 
-    public TelaEdicaoView()
-    {
+    public TelaEdicaoView() {
         setId(2);
     }
 
     @Override
     public void mostraTela(TelaCallback callback) {
-        Callback = callback;
+       /* Callback = callback;
         _agenda=Callback.GetAgenda();
         Compromisso = new CompromissoModel();
         setCabecalho("EDITAR COMPROMISSOS");
 
         montaCabecalho();
         ExibeMenu();
-
+*/
 
     }
 
     @Override
     public void manipulaInput(String Input) {
 
-        if(Input.equals("exit"))
+      /*  if(Input.equals("exit"))
         {
             Callback.trocarTela(0);
             return;
@@ -68,17 +69,17 @@ public class TelaEdicaoView extends PadraoView{
             case CONFIRMA_EDICAO:
                 Confirmar_Edicao(Input);
                 break;
-        }
+        }*/
 
     }
-    void GetTitulo(String Input)
-    {
-        Compromisso.setTitulo(Input);
-        ExibeMenuOpcoesEdicao();
+
+    void GetTitulo(String Input) {
+     /*   Compromisso.setTitulo(Input);
+        ExibeMenuOpcoesEdicao();*/
     }
-    void GetDataTime(String Input)
-    {
-        String data = Input;
+
+    void GetDataTime(String Input) {
+       /* String data = Input;
         Calendar cal = Calendar.getInstance();
 
         SimpleDateFormat sdfDate = new SimpleDateFormat("dd/MM/yyyy HH:mm");
@@ -233,5 +234,6 @@ public class TelaEdicaoView extends PadraoView{
     {
         exibeNoConsole("ID digitado não é valido!");
         ExibeMenu();
+    }*/
     }
 }
