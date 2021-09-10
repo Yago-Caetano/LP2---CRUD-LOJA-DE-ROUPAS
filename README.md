@@ -71,7 +71,7 @@ Atualmente, o controle de estoque é feito através de uma tabela Excel e possui
     </tr>
     <tr>
         <td>Lucas Santos</td>
-        <td>RA: 081190014</td>
+        <td>RA: 081190015</td>
 				<td>https://github.com/Lucas</td>
     </tr>
 </table>
