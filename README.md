@@ -67,11 +67,11 @@ Atualmente, o controle de estoque é feito através de uma tabela Excel e possui
     <tr>
         <td>Roger kenich</td>
         <td>RA: 081190026</td>
-				<td>https://github.com/Roger</td>
+				<td>https://github.com/RogerKenichi</td>
     </tr>
     <tr>
         <td>Lucas Santos</td>
         <td>RA: 081190015</td>
-				<td>https://github.com/Lucas</td>
+				<td>https://github.com/lucasscbr</td>
     </tr>
 </table>
