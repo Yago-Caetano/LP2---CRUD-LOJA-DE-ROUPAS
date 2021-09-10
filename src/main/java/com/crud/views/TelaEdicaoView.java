@@ -1,11 +1,14 @@
 package com.crud.views;
 
+import com.crud.models.ItemModel;
+import jdk.nashorn.internal.codegen.CompilerConstants;
+
 import java.util.Calendar;
 
 public class TelaEdicaoView extends PadraoView {
 
-    private byte menu;
     private int Del_ID;
+
 
     final static byte GET_ID = 0;
     final static byte OPCOES_EDICAO = 1;
@@ -27,21 +30,23 @@ public class TelaEdicaoView extends PadraoView {
 
     @Override
     public void mostraTela(TelaCallback callback) {
-       /* Callback = callback;
-        _agenda=Callback.GetAgenda();
-        Compromisso = new CompromissoModel();
+        menu = GET_ID;
+        Item= new ItemModel();
+        EnumsTipoArray=ItemModel.getEnumsTipo();
+        EnumsCorArray=ItemModel.getEnumsCor();
+        EnumsTamanhoArray=ItemModel.getEnumsTamanho();
+        Callback = callback;
         setCabecalho("EDITAR COMPROMISSOS");
-
         montaCabecalho();
         ExibeMenu();
-*/
+
 
     }
 
     @Override
     public void manipulaInput(String Input) {
 
-      /*  if(Input.equals("exit"))
+        if(Input.equals("exit"))
         {
             Callback.trocarTela(0);
             return;
@@ -54,113 +59,83 @@ public class TelaEdicaoView extends PadraoView {
             case OPCOES_EDICAO:
                 InputOpcoesEdicao(Input);
                 break;
-            case EDITAR_TITULO:
-                GetTitulo(Input);
+            case EDITAR_DATA_ENTRADA :
+                GetDataEntrada(Input,OPCOES_EDICAO,EDITAR_DATA_ENTRADA,
+                        ExibeMenuOpcoesEdicao(), "Data inválida!\nDigite a nova data de entrada no formato> dd/MM/yyyy");
                 break;
-            case EDITAR_DESCRICAO:
-                GetDescricao(Input);
+            case EDITAR_LOCALCOMPRA :
+                GetLocalCompra(Input,OPCOES_EDICAO,(byte)0,ExibeMenuOpcoesEdicao(),"");
                 break;
-            case EDITAR_DATA:
-                GetDataTime(Input);
+            case EDITAR_TIPO :
+                GetEnumTipo(Input,OPCOES_EDICAO,(byte)0,
+                        ExibeMenuOpcoesEdicao(),"Opção inválida!\n"+ExibeTamanho());
                 break;
-            case EDITAR_DATAAVISO:
-                GetDataTimeAviso(Input);
+            case EDITAR_MARCA :
+                GetMarca(Input,OPCOES_EDICAO,(byte)0,ExibeMenuOpcoesEdicao(),"");
+                break;
+            case EDITAR_CARACTERISTICAS :
+                GetCaracateristicas(Input,OPCOES_EDICAO,(byte)0,ExibeMenuOpcoesEdicao(),"");
+                break;
+            case EDITAR_TAMANHO :
+                GetEnumTamanho(Input,OPCOES_EDICAO,(byte)0,ExibeMenuOpcoesEdicao(),"Opção Inválida!\n"+ExibeTamanho());
+                break;
+            case EDITAR_COR :
+                GetEnumCor(Input,OPCOES_EDICAO,(byte)0,ExibeMenuOpcoesEdicao(),"Opção Inválida!\n"+ExibeCor());
+                break;
+            case EDITAR_VALOR_PAGO_MARGEM :
+                GetValorPago(Input,OPCOES_EDICAO,(byte)0,ExibeMenuOpcoesEdicao(),"Valor inválido!");
+                break;
+            case EDITAR_PRECO_SUGERIDO :
+                GetPrecoSugerido(Input,OPCOES_EDICAO,(byte)0,ExibeMenuOpcoesEdicao(),"");
                 break;
             case CONFIRMA_EDICAO:
                 Confirmar_Edicao(Input);
                 break;
-        }*/
-
-    }
-
-    void GetTitulo(String Input) {
-     /*   Compromisso.setTitulo(Input);
-        ExibeMenuOpcoesEdicao();*/
-    }
-
-    void GetDataTime(String Input) {
-       /* String data = Input;
-        Calendar cal = Calendar.getInstance();
-
-        SimpleDateFormat sdfDate = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-        try
-        {
-            exibeNoConsole(data);
-            Date date = sdfDate.parse(data);
-            cal.setTime(date);
-            Compromisso.setData(cal);
-            if(!ValidaDataAviso(Compromisso.getDataAviso()))
-            {
-                exibeNoConsole("a data de aviso deve ser menor que a data do compromisso");
-                exibeNoConsole("a data de aviso será igualada a data nominal!");
-                Compromisso.setDataAviso(cal);
-            }
-            ExibeMenuOpcoesEdicao();
         }
-        catch ( ParseException ex)
-        {
-            exibeNoConsole("Data inválida!");
-            ExibeMenuOpcoesEdicao();
-        }
-    }
-    void GetDescricao(String Input)
-    {
-        Compromisso.setDescricao(Input);
-        ExibeMenuOpcoesEdicao();
-    }
-    void GetDataTimeAviso(String Input)
-    {
-        String data = Input;
-        Calendar cal = Calendar.getInstance();
 
-        SimpleDateFormat sdfDate = new SimpleDateFormat("dd/MM/yyyy hh:mm");
-        try
-        {
-            exibeNoConsole(data);
-            Date date = sdfDate.parse(data);
-            cal.setTime(date);
-            if(ValidaDataAviso(cal))
-                Compromisso.setDataAviso(cal);
-            else
-                exibeNoConsole("a data de aviso deve ser menor que a data do compromisso");
-
-
-        }
-        catch ( ParseException ex)
-        {
-            exibeNoConsole("Data inválida!");
-            ExibeMenuOpcoesEdicao();
-        }
-        ExibeMenuOpcoesEdicao();
     }
-    boolean ValidaDataAviso(Calendar cal)
-    {
-        //exibeNoConsole(String.valueOf(Compromisso.getData().compareTo(cal)));
-        if (Compromisso.getData().compareTo(cal)==1)
-            return true;
-        else
-            return false;
-    }
+
 
     private void InputOpcoesEdicao(String input)
     {
         switch(input)
         {
             case "1":
-                exibeNoConsole("Digite o novo título:");
-                menu=EDITAR_TITULO;
+                exibeNoConsole("Digite a nova data de entrada no formato> dd/MM/yyyy");
+                menu=EDITAR_DATA_ENTRADA ;
                 break;
             case "2":
-                exibeNoConsole("Digite a nova descrição:");
-                menu=EDITAR_DESCRICAO;
+                exibeNoConsole("Digite o novo local de compra:");
+                menu=EDITAR_LOCALCOMPRA ;
                 break;
             case "3":
-                exibeNoConsole("Digite a nova data no formato: dd/MM/yyyy HH:mm");
-                menu=EDITAR_DATA;
+                exibeNoConsole("Escolha o novo tipo:\n"+ExibeTipoIem());
+                menu=EDITAR_TIPO;
                 break;
             case "4":
-                exibeNoConsole("Digite a nova data de aviso no formato: dd/MM/yyyy HH:mm");
-                menu=EDITAR_DATAAVISO;
+                exibeNoConsole("Digite a nova marca:");
+                menu=EDITAR_MARCA ;
+                break;
+            case "5":
+                exibeNoConsole("Digite as novas características:");
+                menu=EDITAR_CARACTERISTICAS ;
+                break;
+            case "6":
+                exibeNoConsole("Escolha o novo tamanho\n"+ExibeTamanho());
+                ExibeTamanho();
+                menu=EDITAR_TAMANHO ;
+                break;
+            case "7":
+                exibeNoConsole("Escolha a cor:\n"+ExibeCor());
+                menu=EDITAR_COR ;
+                break;
+            case "8":
+                exibeNoConsole("Digite o novo valor pago:");
+                menu=EDITAR_VALOR_PAGO_MARGEM ;
+                break;
+            case "9":
+                exibeNoConsole("Digite o novo preço sugerido:");
+                menu=EDITAR_PRECO_SUGERIDO ;
                 break;
             case "save":
                 exibeNoConsole("Deseja salvar essa edicao? digite 's'");
@@ -175,13 +150,8 @@ public class TelaEdicaoView extends PadraoView {
         switch(input)
         {
             case "s":
-                if(_agenda.EditarCompromisso(Compromisso))
-                {
-                    exibeNoConsole("Editado!");
-                    Callback.trocarTela(0);
-                }
-                else
-                    exibeNoConsole("Erro ao editar!");
+                Callback.EditarItem(Item);
+                Callback.trocarTela(0);
                 break;
             default:
                 ExibeMenuOpcoesEdicao();
@@ -199,14 +169,15 @@ public class TelaEdicaoView extends PadraoView {
         try
         {
             Del_ID = Integer.parseInt(input);
-            Compromisso=_agenda.GetCompromissoById(Del_ID);
-            if(Compromisso==null)
+            Item= Callback.GetItem(Del_ID);
+            if(Item==null)
                 MsgDesistir_Continuar();
             else
             {
-                exibeNoConsole("Compromisso encontrado..");
-                exibeNoConsole(Compromisso.PrintCompromisso());
-                ExibeMenuOpcoesEdicao();
+                exibeNoConsole("Item encontrado..");
+                exibeNoConsole(Item.PrintItem());
+                menu= OPCOES_EDICAO;
+                exibeNoConsole(ExibeMenuOpcoesEdicao());
             }
 
         }
@@ -217,23 +188,30 @@ public class TelaEdicaoView extends PadraoView {
 
     }
 
-    private void ExibeMenuOpcoesEdicao() {
-        menu= OPCOES_EDICAO;
-        exibeNoConsole("Digite 1 -> Editar Título");
-        exibeNoConsole("Digite 2 -> Editar Descrição");
-        exibeNoConsole("Digite 3 -> Editar Data");
-        exibeNoConsole("Digite 4 -> Editar Data Aviso");
-        exibeNoConsole("Digite 'save' para salvar ou 'exit' para sair deste menu");
+    private String ExibeMenuOpcoesEdicao() {
+        String dat="";
+        dat="Digite 1 -> Editar Data de Entrada\n";
+        dat=dat+"Digite 2 -> Editar Local de compra";
+        dat=dat+"Digite 3 -> Editar Tipo do Item\n";
+        dat=dat+"Digite 4 -> Editar Marca\n";
+        dat=dat+"Digite 5 -> Editar Caracteríticas\n";
+        dat=dat+"Digite 6 -> Editar Tamanho\n";
+        dat=dat+"Digite 7 -> Editar Cor\n";
+        dat=dat+"Digite 8 -> Editar Valor pago\n";
+        dat=dat+"Digite 9 -> Editar Preço sugerido\n";
+
+        dat=dat+"Digite 'save' para salvar ou 'exit' para sair deste menu\n";
+        return dat;
     }
     private void ExibeMenu() {
-        menu = GET_ID;
-        exibeNoConsole("Digite o ID do compromisso que deseja editar");
+
+        exibeNoConsole("Digite o ID do item que deseja editar");
         exibeNoConsole("exit para sair deste menu");
     }
     private void MsgDesistir_Continuar()
     {
         exibeNoConsole("ID digitado não é valido!");
         ExibeMenu();
-    }*/
     }
+
 }

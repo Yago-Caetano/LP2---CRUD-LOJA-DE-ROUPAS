@@ -1,18 +1,11 @@
 package com.crud;
 
+import com.crud.controllers.ItemController;
 import com.crud.dao.ItemDAO;
 import com.crud.models.ItemModel;
-import com.crud.views.PadraoView;
-import com.crud.views.TelaCadastroView;
-import com.crud.views.TelaCallback;
-import com.crud.views.TelaPrincipalView;
-import com.google.gson.Gson;
+import com.crud.views.*;
 
-import java.io.FileWriter;
-import java.io.IOException;
-import java.math.BigInteger;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
@@ -27,6 +20,9 @@ public class Main {
     public static final int TELA_DELETAR = 6;
 
 
+    static ItemDAO Estoque;
+    static ItemController controller;
+    static boolean FlagSair=false;
 
     private static List<PadraoView> Telas;
     private static int IndiceDeTelaSelecionado;
@@ -49,12 +45,33 @@ public class Main {
 
         @Override
         public boolean InsertItem(ItemModel Item) {
-            return false;
+            controller.inserirItem(Item);
+            return true;
         }
 
         @Override
-        public int SolicitarID() {
-            return 0;
+        public ItemModel GetItem(int id) {
+            return controller.getItem(id);
+        }
+
+        @Override
+        public void EditarItem(ItemModel item) {
+            controller.editarItem(item);
+        }
+
+        @Override
+        public void ExcluirItem(ItemModel Item) {
+            controller.deletarItem(Item);
+        }
+
+        @Override
+        public ArrayList<ItemModel> GetEstoque() {
+            return controller.getAllItens();
+        }
+
+        @Override
+        public void ExitProgram() {
+            FlagSair=true;
         }
 
 
@@ -69,11 +86,10 @@ public class Main {
 
     public static void main(String[] args)
     {
-        ItemDAO dao = new ItemDAO();
 
         gerenciarTelas();
 
-        while (true)
+        while (!FlagSair)
         {
             aguardaInput();
         }
@@ -83,13 +99,18 @@ public class Main {
     public static void gerenciarTelas()
     {
         IndiceDeTelaSelecionado = 0;
+        Estoque= new ItemDAO();
+        controller= new ItemController();
+        Estoque.lerItens();
         //Agenda= new AgendaModel();
         Telas = new ArrayList<PadraoView>();
 
         Telas.add(new TelaPrincipalView());
         Telas.add(new TelaCadastroView());
+        Telas.add(new TelaEdicaoView());
+        Telas.add(new TelaDeleteView());
         // Telas.add(new TelaAgendaView());
-        //Telas.add(new TelaEdicaoView());
+
         //Telas.add(new TelaDeletarView());
 
         mostraTelaSelecionada();

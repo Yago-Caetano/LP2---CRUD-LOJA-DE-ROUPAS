@@ -1,5 +1,7 @@
 package com.crud.views;
 
+import com.crud.models.ItemModel;
+
 public class TelaPrincipalView extends  PadraoView{
 
     private byte menu;
@@ -41,13 +43,18 @@ public class TelaPrincipalView extends  PadraoView{
                 Callback.trocarTela(1);
                 break;
             case "2":
-                Callback.trocarTela(5);
+                for(ItemModel i : Callback.GetEstoque())
+                    exibeNoConsole(i.PrintItem()+"\n");
+                ExibeMenu();
                 break;
             case "3":
                 Callback.trocarTela(2);
                 break;
             case "4":
                 Callback.trocarTela(6);
+                break;
+            case "exit":
+                Callback.ExitProgram();
                 break;
             default:
                 exibeNoConsole(Input);
@@ -62,6 +69,7 @@ public class TelaPrincipalView extends  PadraoView{
         exibeNoConsole("Digite 2 - > Visualizar estoque");
         exibeNoConsole("Digite 3 - > Editar roupa");
         exibeNoConsole("Digite 4 - > Deletar roupa");
+        exibeNoConsole("Digite exit - > Para sair do sistema");
     }
 
 

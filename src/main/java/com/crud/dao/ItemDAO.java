@@ -23,13 +23,19 @@ public class ItemDAO {
     }
 
     static ArrayList<ItemModel> listaItens = new ArrayList<ItemModel>();
+    int MaxID=-1;
+    static final String path="Estoque.json";
 
+    public int SolicitarID()
+    {
+        return MaxID+1;
+    }
     public void lerItens(){
             Gson gson = new Gson();
 
             try {
                 Type ItemListType = new TypeToken<ArrayList<ItemModel>>(){}.getType();
-               BufferedReader br = new BufferedReader(new FileReader("Compras.json"));
+               BufferedReader br = new BufferedReader(new FileReader(path));
 
                 listaItens = gson.fromJson(br, ItemListType);
                 //ItemModel item = gson.fromJson(br, ItemModel.class);
@@ -38,11 +44,15 @@ public class ItemDAO {
 
                 for (ItemModel item: listaItens
                      ) {
+                    if (item.getCodigoItem()>MaxID)
+                        MaxID=item.getCodigoItem();
+
                     System.out.println(item.getCodigoItem() + " - " + item.getTipo());
                 }
 
             } catch (IOException e) {
-                e.printStackTrace();
+                //e.printStackTrace();
+                listaItens= new ArrayList<>();
             }
         }
 
@@ -51,7 +61,7 @@ public class ItemDAO {
         String json = gson.toJson(listaItens);
 
         try {
-           FileWriter writer = new FileWriter("Compras.json");
+           FileWriter writer = new FileWriter(path);
             writer.write(json);
             writer.close();
 
@@ -61,18 +71,24 @@ public class ItemDAO {
     }
 
     public void insertItem(ItemModel item){
+        item.setCodigoItem(SolicitarID());
         listaItens.add(item);
         salvarItens();
+        MaxID=item.getCodigoItem();
     }
 
     public void deleteItem(int id){
-
+        boolean removeu = false;
         //Uso do Iterator para evitar ConcurrentModificationException
         for (Iterator<ItemModel> iterator = listaItens.iterator(); iterator.hasNext();) {
             ItemModel item = iterator.next();
             if(item.getCodigoItem() == id) {
                 iterator.remove();
+                removeu = true;
             }
+        }
+        if(removeu){
+            salvarItens();
         }
     }
 
