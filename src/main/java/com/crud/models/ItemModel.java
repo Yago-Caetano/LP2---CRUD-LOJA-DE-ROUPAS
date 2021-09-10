@@ -5,6 +5,9 @@ import com.crud.enums.EnumTamanho;
 import com.crud.enums.EnumTipoItem;
 
 import java.math.BigInteger;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 
 public class ItemModel {
@@ -25,11 +28,11 @@ public class ItemModel {
 
     private EnumCor Cor;
 
-    private BigInteger ValorPago;
+    private double ValorPago;
 
-    private BigInteger ValorMargem;
+    private double ValorMargem;
 
-    private BigInteger PrecoSugerido;
+    private double PrecoSugerido;
 
     public ItemModel() {
     }
@@ -99,27 +102,60 @@ public class ItemModel {
         Cor = cor;
     }
 
-    public BigInteger getValorPago() {
+    public double getValorPago() {
         return ValorPago;
     }
 
-    public void setValorPago(BigInteger valorPago) {
+    // Seta o valor pago e já calcula o valor de margem
+    public void setValorPago(double valorPago) {
         ValorPago = valorPago;
+        setValorMargem();
     }
 
-    public BigInteger getValorMargem() {
+    public double getValorMargem() {
         return ValorMargem;
     }
 
-    public void setValorMargem(BigInteger valorMargem) {
-        ValorMargem = valorMargem;
+    public void setValorMargem() {
+        ValorMargem = ValorPago*2;
     }
 
-    public BigInteger getPrecoSugerido() {
+    public double getPrecoSugerido() {
         return PrecoSugerido;
     }
 
-    public void setPrecoSugerido(BigInteger precoSugerido) {
+    public void setPrecoSugerido(double precoSugerido) {
         PrecoSugerido = precoSugerido;
+    }
+
+    public static EnumTipoItem[] getEnumsTipo() {
+        return Arrays.stream(EnumTipoItem.values()).toArray(EnumTipoItem[]::new);
+
+    }
+    public static EnumCor[] getEnumsCor() {
+        return Arrays.stream(EnumCor.values()).toArray(EnumCor[]::new);
+
+    }
+    public static EnumTamanho[] getEnumsTamanho() {
+        return Arrays.stream(EnumTamanho.values()).toArray(EnumTamanho[]::new);
+
+    }
+    public String PrintItem()
+    {
+        DateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        String result="";
+        result="Id: " + String.valueOf(CodigoItem) + "\n";
+        result= result + "Data de entrada: " + sdf.format(DataEntrada.getTime()) + "\n";
+        result= result + "Local de compra: " +  LocalCompra+ "\n";
+        result= result + "Tipo: " +  Tipo.name()+ "\n";
+        result= result + "Marca: " +  Marca+ "\n";
+        result= result + "Carcaterísticas: " +  Caracteristicas+ "\n";
+        result= result + "Tamanho: " +  Tamanho.name()+ "\n";
+        result= result + "Cor: " +  Cor.name()+ "\n";
+        result= result + "Valor Pago: " +  String.valueOf(ValorPago)+ "\n";
+        result= result + "Valor de Margem: " +  String.valueOf(ValorMargem)+ "\n";
+        result= result + "Preço Sugerido: " +  String.valueOf(PrecoSugerido)+ "\n";
+
+        return result;
     }
 }
